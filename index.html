@@ -88,15 +88,16 @@
             font-weight: 700;
             color: #1e3a8a;
         }
-        .copy-button {
+        .copy-button, .inquiries-button {
             padding: 0.5rem 1.5rem;
             background: #3b82f6;
             color: white;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: background 0.2s ease, transform 0.1s ease;
+            margin-left: 0.5rem;
         }
-        .copy-button:hover {
+        .copy-button:hover, .inquiries-button:hover {
             background: #2563eb;
             transform: translateY(-1px);
         }
@@ -168,6 +169,15 @@
             font-size: 0.85rem;
             padding: 0.25rem 0;
         }
+        .inquiry-section {
+            margin-bottom: 1.5rem;
+        }
+        .inquiry-section h3 {
+            color: #1e3a8a;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
         @media (max-width: 1024px) {
             .book-wrapper {
                 flex-direction: column;
@@ -238,7 +248,10 @@
         <main class="content-area">
             <div class="template-header">
                 <div id="templateTitle" class="template-title">RT Ticket Flow</div>
-                <button id="copyButton" class="copy-button">Copy Template</button>
+                <div>
+                    <button id="inquiriesButton" class="inquiries-button">RT Ticket Inquiries</button>
+                    <button id="copyButton" class="copy-button">Copy Template</button>
+                </div>
             </div>
             <div id="templateContent" class="data-item">
                 <div class="flex flex-row flex-wrap items-start gap-2">
@@ -431,6 +444,7 @@
             const templateTitle = document.getElementById('templateTitle');
             const templateContent = document.getElementById('templateContent');
             const copyButton = document.getElementById('copyButton');
+            const inquiriesButton = document.getElementById('inquiriesButton');
 
             // Section content map
             const sectionContent = {
@@ -616,7 +630,91 @@
                     </div>
                 `,
                 "Retention Team Flow": "This section describes the Retention Team Flow process. Add your flow steps or documentation here.",
-                "Collection Team Flow": "This section describes the Collection Team Flow process. Add your flow steps or documentation here."
+                "Collection Team Flow": "This section describes the Collection Team Flow process. Add your flow steps or documentation here.",
+                "RT Ticket Inquiries": `
+                    <div class="inquiry-section">
+                        <h3>Service Availability (Technical-Issue) (Time Frame - 24 hours)</h3>
+                        <ul class="step-bullets">
+                            <li>Alarm / Lastsmile</li>
+                            <li>Many ONU Down/PON Down</li>
+                            <li>Internet Not Working</li>
+                            <li>No WiFi Signal</li>
+                            <li><strong>Note:</strong> Ticket Created from CCare send to Digital Team only</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Fulfillment (Time Frame - 24 hours)</h3>
+                        <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
+                        <ul class="step-bullets">
+                            <li>Request Relocate / Re-Configure Modem</li>
+                            <li>Request Configure / Re-Configure Router / Access Point</li>
+                            <li>Request Username / Password Login Modem / Router</li>
+                            <li>Request Change Username / Password WiFi Modem / Router</li>
+                            <li>Request Configure Remote Camera</li>
+                            <li>Request NAT Domain / Static IP for Remote Camera</li>
+                            <li>Request Survey LAN/Wi-Fi</li>
+                            <li>Request to add graph / share graph utilization</li>
+                            <li>Request to enable/disable MAC address</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Service Performance (Technical-Issue) (Time Frame - 24 hours)</h3>
+                        <ul class="step-bullets">
+                            <li>Internet Slow</li>
+                            <li>Internet Unstable</li>
+                            <li>WiFi Low Signal</li>
+                            <li>Link Budget Low or High</li>
+                            <li>Website Issue</li>
+                            <li>App Issue</li>
+                            <li>Game Issue</li>
+                            <li>Port Access</li>
+                            <li>Protocol / Port Accessing Issue</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Re-activation (Queue ActivationTeam)</h3>
+                        <ul class="step-bullets">
+                            <li>Connection which already dismantled with infrastructure provider</li>
+                            <li>Connection which already terminated and removed connectivity/port/device</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Change Order: Queue Customer Delivery</h3>
+                        <ul class="step-bullets">
+                            <li>Update Profile</li>
+                            <li>Upgrade Speed</li>
+                            <li>Downgrade Speed</li>
+                            <li>Test Speed</li>
+                            <li>Change Billing Date</li>
+                            <li>Change Location</li>
+                            <li>Change Account Name</li>
+                            <li>Purchase CPE</li>
+                            <li>Purchase Static IP</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Open Invoice Activities: Queue CareCollection</h3>
+                        <ul class="step-bullets">
+                            <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
+                            <li>Renewal + Promotion (Has Pending Invoice)</li>
+                            <li>Reactive Request (Has Pending Invoice)</li>
+                            <li>Terminate Request (Has Pending Invoice)</li>
+                            <li>Request Compensation (Has Pending Invoice)</li>
+                            <li>Request Refund (Has Pending Invoice)</li>
+                        </ul>
+                    </div>
+                    <div class="inquiry-section">
+                        <h3>Billing Issues (Non - Open Invoice): Queue CareRenewal</h3>
+                        <ul class="step-bullets">
+                            <li>Refuse to Pay Invoice</li>
+                            <li>Renewal + Promotion</li>
+                            <li>Reactive Request</li>
+                            <li>Terminate Request</li>
+                            <li>Request Compensation</li>
+                            <li>Request Refund</li>
+                        </ul>
+                    </div>
+                `
             };
 
             sectionTitles.forEach(section => {
@@ -624,10 +722,11 @@
                     sectionTitles.forEach(s => s.classList.remove('bg-blue-100'));
                     this.classList.add('bg-blue-100');
                     const sectionName = this.getAttribute('data-section');
-                    if (templateTitle && templateContent && copyButton) {
+                    if (templateTitle && templateContent && copyButton && inquiriesButton) {
                         templateTitle.textContent = sectionName;
                         templateContent.innerHTML = sectionContent[sectionName] || "";
                         copyButton.classList.remove('hidden');
+                        inquiriesButton.classList.toggle('hidden', sectionName !== 'RT Ticket Flow');
                     }
                 });
             });
@@ -636,8 +735,9 @@
             if (copyButton) {
                 copyButton.addEventListener('click', () => {
                     if (templateContent) {
-                        const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li'))
+                        const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .inquiry-section h3, .inquiry-section p'))
                             .map(el => el.textContent.trim())
+                            .filter(text => text)
                             .join('\n');
                         navigator.clipboard.writeText(textContent).then(() => {
                             copyButton.textContent = 'Copied!';
@@ -645,6 +745,17 @@
                                 copyButton.textContent = 'Copy Template';
                             }, 1500);
                         });
+                    }
+                });
+            }
+
+            // Inquiries button shows RT Ticket Inquiries
+            if (inquiriesButton) {
+                inquiriesButton.addEventListener('click', () => {
+                    if (templateTitle && templateContent) {
+                        templateTitle.textContent = 'RT Ticket Inquiries';
+                        templateContent.innerHTML = sectionContent['RT Ticket Inquiries'];
+                        copyButton.classList.remove('hidden');
                     }
                 });
             }
