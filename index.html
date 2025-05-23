@@ -3,292 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Templates</title>
+    <title>Customer Care Flow</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/style.min.css" rel="stylesheet">
     <style>
+        /* CSS Variables */
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-hover: #2563eb;
+            --text-dark: #1e3a8a;
+            --text-muted: #4b5563;
+            --text-light: #6b7280;
+            --bg-light: #f9fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-md: 0 6px 16px rgba(0,0,0,0.1);
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --font-size-sm: 0.85rem;
+            --font-size-base: 0.9rem;
+            --font-size-lg: 1rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+        }
+
+        /* Base Styles */
         html, body {
             font-family: 'Inter', Arial, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
             min-height: 100vh;
             margin: 0;
-            height: auto;
             overflow: auto;
         }
+
+        /* Layout */
         .book-wrapper {
             display: flex;
             max-width: 1400px;
-            margin: 1.5rem auto;
-            background: #ffffff;
+            margin: var(--spacing-lg) auto;
+            background: var(--bg-white);
             border-radius: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-            height: 100%;
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
         }
+
         .sidebar {
             width: 300px;
-            background: #f9fafc;
-            border-right: 1px solid #e2e8f0;
-            padding: 1.5rem;
+            background: var(--bg-light);
+            border-right: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
             overflow-y: auto;
             transition: width 0.3s ease;
         }
+
+        .content-area {
+            flex: 1;
+            padding: var(--spacing-xl);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) #e6f0fa;
+            background: var(--bg-white);
+        }
+
+        /* Sidebar Components */
         .sidebar-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--spacing-lg);
         }
+
         .sidebar h2 {
-            font-size: 1.25rem;
+            font-size: var(--font-size-xl);
             font-weight: 700;
-            color: #1e3a8a;
+            color: var(--text-dark);
         }
+
         .search-container {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--spacing-lg);
         }
+
         .search-input {
             width: 100%;
-            padding: 0.5rem 2rem 0.5rem 2.5rem;
-            border: 1px solid #e2e8f0;
+            padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) 2.5rem;
+            border: 1px solid var(--border-color);
             border-radius: 0.5rem;
-            font-size: 0.9rem;
+            font-size: var(--font-size-base);
             transition: border-color 0.2s ease;
         }
+
         .search-input:focus {
-            border-color: #3b82f6;
+            border-color: var(--primary-color);
             outline: none;
         }
+
         .search-icon {
             position: absolute;
             left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #64748b;
+            color: var(--text-muted);
         }
-        .content-area {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #3b82f6 #e6f0fa;
-            max-height: 100%;
-            background: #ffffff;
-        }
+
+        /* Content Components */
         .template-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: var(--spacing-xl);
         }
+
         .template-title {
-            font-size: 1.5rem;
+            font-size: var(--font-size-2xl);
             font-weight: 700;
-            color: #1e3a8a;
+            color: var(--text-dark);
         }
+
         .copy-button, .inquiries-button {
-            padding: 0.5rem 1.5rem;
-            background: #3b82f6;
-            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--primary-color);
+            color: var(--bg-white);
             border-radius: 0.5rem;
             cursor: pointer;
             transition: background 0.2s ease, transform 0.1s ease;
-            margin-left: 0.5rem;
+            margin-left: var(--spacing-sm);
         }
+
         .copy-button:hover, .inquiries-button:hover {
-            background: #2563eb;
+            background: var(--primary-hover);
             transform: translateY(-1px);
         }
+
         .data-item {
-            background: #f9fafc;
-            padding: 1.5rem;
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
             border-radius: 1rem;
-            border: 1px solid #e2e8f0;
-            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            font-size: var(--font-size-base);
             line-height: 1.5;
         }
+
         .step-container {
             flex: 1 1 220px;
             min-width: 220px;
             max-width: 260px;
-            margin: 0.5rem;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            margin: var(--spacing-sm);
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
             border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
+
         .step-container:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
         }
+
         .number-icon {
-            flex: 0 0 auto;
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #3b82f6;
-            color: white;
+            background: var(--primary-color);
+            color: var(--bg-white);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: var(--font-size-base);
         }
+
         .step-icon {
             width: 24px;
             height: 24px;
-            color: #3b82f6;
+            color: var(--primary-color);
         }
+
         .connector-svg {
             width: 40px;
             height: 40px;
             flex: 0 0 40px;
         }
+
         .step-title {
-            color: #1e3a8a;
+            color: var(--text-dark);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: var(--font-size-lg);
         }
+
         .step-description {
-            color: #4b5563;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            color: var(--text-muted);
+            font-size: var(--font-size-base);
+            margin-top: var(--spacing-sm);
         }
+
         .step-bullets {
             list-style-type: disc;
-            padding-left: 1.5rem;
-            margin-top: 0.5rem;
+            padding-left: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
         }
+
         .step-bullets li {
-            color: #6b7280;
-            font-size: 0.85rem;
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
             padding: 0.25rem 0;
         }
+
         .inquiries-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
+            gap: var(--spacing-md);
         }
+
         .inquiry-card {
             width: 100%;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
             border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
+
         .inquiry-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
         }
+
         .card-title {
-            color: #1e3a8a;
+            color: var(--text-dark);
             font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
+            font-size: var(--font-size-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
+
         .card-title::after {
             content: '▶';
-            font-size: 0.8rem;
-            color: #3b82f6;
+            font-size: var(--font-size-sm);
+            color: var(--primary-color);
             transition: transform 0.3s ease;
         }
+
         .card-title.collapsed::after {
             content: '▼';
         }
+
         .card-content {
-            color: #4b5563;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            color: var(--text-muted);
+            font-size: var(--font-size-base);
+            margin-top: var(--spacing-sm);
             display: block;
             transition: max-height 0.3s ease, opacity 0.3s ease;
             max-height: 500px;
             opacity: 1;
         }
+
         .card-content.collapsed {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
         }
+
         .card-bullets {
             list-style-type: disc;
-            padding-left: 1.5rem;
-            margin-top: 0.5rem;
+            padding-left: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
         }
+
         .card-bullets li {
-            color: #6b7280;
-            font-size: 0.85rem;
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
             padding: 0.25rem 0;
         }
+
         .card-note {
             font-weight: 600;
-            color: #1e3a8a;
+            color: var(--text-dark);
         }
+
+        /* Media Queries */
         @media (max-width: 1024px) {
             .book-wrapper {
                 flex-direction: column;
                 margin: 0;
                 border-radius: 0;
-                height: auto;
             }
+
             .sidebar {
                 width: 100%;
                 border-right: none;
-                border-bottom: 1px solid #e2e8f0;
-                max-height: 30vh;
-                overflow-y: auto;
+                border-bottom: 1px solid var(--border-color);
+                max-height: calc(40vh - var(--spacing-lg));
             }
+
             .content-area {
-                padding: 1.5rem;
-                height: auto;
-                overflow-y: auto;
+                padding: var(--spacing-lg);
             }
-            .data-item {
-                flex-direction: column;
-            }
+
             .step-container {
                 min-width: 100%;
                 max-width: 100%;
-                margin: 0.5rem 0;
+                margin: var(--spacing-sm) 0;
             }
+
             .inquiries-grid {
                 grid-template-columns: 1fr;
             }
+
             .inquiry-card {
                 min-width: 100%;
                 max-width: 100%;
-                margin: 0.5rem 0;
+                margin: var(--spacing-sm) 0;
             }
+
             .connector-svg {
                 transform: rotate(90deg);
-                margin: 0.5rem 0;
+                margin: var(--spacing-sm) 0;
             }
         }
+
         @media (max-width: 640px) {
             .template-title {
-                font-size: 1.25rem;
+                font-size: var(--font-size-xl);
             }
+
             .data-item {
-                padding: 1rem;
+                padding: var(--spacing-md);
             }
-            .sidebar {
-                max-height: 40vh;
-            }
+
             .search-input {
-                font-size: 0.8rem;
-            }
-            .content-area {
-                overflow-y: auto;
+                font-size: var(--font-size-sm);
             }
         }
     </style>
@@ -303,11 +361,11 @@
                 <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search templates...">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search templates..." aria-label="Search templates">
             </div>
-            <div class="section-title font-semibold text-blue-900 mt-6 mb-2 cursor-pointer hover:text-blue-600" data-section="RT Ticket Flow">RT Ticket Flow</div>
-            <div class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Retention Team Flow">Retention Team Flow</div>
-            <div class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Collection Team Flow">Collection Team Flow</div>
+            <button class="section-title font-semibold text-blue-900 mt-6 mb-2 cursor-pointer hover:text-blue-600" data-section="RT Ticket Flow">RT Ticket Flow</button>
+            <button class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Retention Team Flow">Retention Team Flow</button>
+            <button class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Collection Team Flow">Collection Team Flow</button>
         </nav>
         <main class="content-area">
             <div class="template-header">
@@ -340,11 +398,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -370,11 +428,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -394,11 +452,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -422,11 +480,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -449,11 +507,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -473,11 +531,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
                             </linearGradient>
                         </defs>
@@ -502,204 +560,42 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM fully loaded and script running');
-            // Add click handlers for sidebar sections
             const sectionTitles = document.querySelectorAll('.section-title[data-section]');
             const templateTitle = document.getElementById('templateTitle');
             const templateContent = document.getElementById('templateContent');
             const copyButton = document.getElementById('copyButton');
             const inquiriesButton = document.getElementById('inquiriesButton');
+            const defaultContent = templateContent.innerHTML; // Store default RT Ticket Flow content
 
             // Section content map
             const sectionContent = {
-                "RT Ticket Flow": `
-                    <div class="flex flex-row flex-wrap items-start gap-2">
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">1</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                    </svg>
-                                    <span class="step-title">Receive Request</span>
-                                </div>
-                                <div class="step-description">
-                                    Request will received by:
-                                    <ul class="step-bullets">
-                                        <li>Facebook</li>
-                                        <li>Website</li>
-                                        <li>Email</li>
-                                        <li>Hotline</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">2</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10m0 0v10m0-10l-4 4m4-4l4 4" />
-                                    </svg>
-                                    <span class="step-title">Create Ticket</span>
-                                </div>
-                                <div class="step-description">
-                                    Ticket will created by:
-                                    <ul class="step-bullets">
-                                        <li>Tier1</li>
-                                        <li>Sale (EOS)</li>
-                                        <li>BO</li>
-                                        <li>Internal Team</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">3</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a2 2 0 00-2-2h-3m-2-2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v7" />
-                                    </svg>
-                                    <span class="step-title">Assign Team</span>
-                                </div>
-                                <div class="step-description">
-                                    RT Team responsible all inquiries in Queue CareRenewal and CareCollection.
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">4</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                    <span class="step-title">Analyze Issue</span>
-                                </div>
-                                <div class="step-description">
-                                    Agent reviews ticket, investigates issue, and documents findings in RT system.
-                                    <ul class="step-bullets">
-                                        <li>On Negotiation / Tracking: Ticket Status "Feedback", Timeline 5 days resolved.</li>
-                                        <li>Internal Process: RT Ticket status "Pending", Timeline 10 days resolved.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">5</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span class="step-title">Resolve/Escalate</span>
-                                </div>
-                                <div class="step-description">
-                                    <ul class="step-bullets">
-                                        <li>Paid within 24 hours (Promotion code date VS Payment date) Escalate to owner.</li>
-                                        <li>After 24 hours RT Agent Activate and complete retain.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">6</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    <span class="step-title">Track Performance</span>
-                                </div>
-                                <div class="step-description">
-                                    Create CCare Ticket for the performance.
-                                </div>
-                            </div>
-                        </div>
-                        <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                            <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="step-container">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="number-icon">7</span>
-                                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span class="step-title">Close Ticket</span>
-                                </div>
-                                <div class="step-description">
-                                    Mark ticket as 'Resolved,' send customer confirmation, and monitor follow-ups.
-                                </div>
-                            </div>
-                        </div>
+                "Retention Team Flow": `
+                    <div class="data-item">
+                        <p>This section describes the Retention Team Flow process.</p>
+                        <ul class="step-bullets">
+                            <li>Identify customers at risk of churn.</li>
+                            <li>Contact customers with retention offers.</li>
+                            <li>Update customer status in CRM.</li>
+                            <li>Monitor retention metrics.</li>
+                        </ul>
                     </div>
                 `,
-                "Retention Team Flow": "This section describes the Retention Team Flow process. Add your flow steps or documentation here.",
-                "Collection Team Flow": "This section describes the Collection Team Flow process. Add your flow steps or documentation here.",
+                "Collection Team Flow": `
+                    <div class="data-item">
+                        <p>This section describes the Collection Team Flow process.</p>
+                        <ul class="step-bullets">
+                            <li>Review overdue accounts.</li>
+                            <li>Send payment reminders.</li>
+                            <li>Negotiate payment plans.</li>
+                            <li>Update payment status in system.</li>
+                        </ul>
+                    </div>
+                `,
                 "RT Ticket Inquiries": `
                     <div class="inquiries-grid">
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Service Availability (Technical-Issue) (Time Frame - 24 hours)</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-1">Service Availability (Technical-Issue) (Time Frame - 24 hours)</button>
+                            <div class="card-content collapsed" id="inquiry-1">
                                 <ul class="card-bullets">
                                     <li>Alarm / Lastsmile</li>
                                     <li>Many ONU Down/PON Down</li>
@@ -710,8 +606,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Fulfillment (Time Frame - 24 hours)</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-2">Fulfillment (Time Frame - 24 hours)</button>
+                            <div class="card-content collapsed" id="inquiry-2">
                                 <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
                                 <ul class="card-bullets">
                                     <li>Request Relocate / Re-Configure Modem</li>
@@ -727,8 +623,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Service Performance (Technical-Issue) (Time Frame - 24 hours)</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-3">Service Performance (Technical-Issue) (Time Frame - 24 hours)</button>
+                            <div class="card-content collapsed" id="inquiry-3">
                                 <ul class="card-bullets">
                                     <li>Internet Slow</li>
                                     <li>Internet Unstable</li>
@@ -743,8 +639,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Re-activation (Queue ActivationTeam)</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-4">Re-activation (Queue ActivationTeam)</button>
+                            <div class="card-content collapsed" id="inquiry-4">
                                 <ul class="card-bullets">
                                     <li>Connection which already dismantled with infrastructure provider</li>
                                     <li>Connection which already terminated and removed connectivity/port/device</li>
@@ -752,8 +648,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Change Order: Queue Customer Delivery</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-5">Change Order: Queue Customer Delivery</button>
+                            <div class="card-content collapsed" id="inquiry-5">
                                 <ul class="card-bullets">
                                     <li>Update Profile</li>
                                     <li>Upgrade Speed</li>
@@ -768,8 +664,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Open Invoice Activities: Queue CareCollection</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-6">Open Invoice Activities: Queue CareCollection</button>
+                            <div class="card-content collapsed" id="inquiry-6">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
                                     <li>Renewal + Promotion (Has Pending Invoice)</li>
@@ -781,8 +677,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-title" onclick="toggleCollapse(this)">Billing Issues (Non - Open Invoice): Queue CareRenewal</div>
-                            <div class="card-content collapsed">
+                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-7">Billing Issues (Non - Open Invoice): Queue CareRenewal</button>
+                            <div class="card-content collapsed" id="inquiry-7">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice</li>
                                     <li>Renewal + Promotion</li>
@@ -797,63 +693,111 @@
                 `
             };
 
+            // Function to attach event listeners to card titles
+            function attachCardTitleListeners() {
+                document.querySelectorAll('.card-title').forEach(title => {
+                    // Remove existing listeners to prevent duplicates
+                    title.removeEventListener('click', handleCardClick);
+                    title.removeEventListener('keydown', handleCardKeydown);
+                    // Add new listeners
+                    title.addEventListener('click', handleCardClick);
+                    title.addEventListener('keydown', handleCardKeydown);
+                });
+            }
+
+            // Handle card title click
+            function handleCardClick() {
+                const content = this.nextElementSibling;
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                this.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            }
+
+            // Handle card title keydown
+            function handleCardKeydown(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleCardClick.call(this);
+                }
+            }
+
+            // Toggle step description visibility for RT Ticket Flow
+            function handleStepClick(e) {
+                // Only toggle if clicking on the step-container, not on SVG or number
+                if (!e.currentTarget.contains(e.target)) return;
+                const desc = e.currentTarget.querySelector('.step-description');
+                if (desc) desc.classList.toggle('hidden');
+            }
+
+            // Handle section clicks
             sectionTitles.forEach(section => {
                 section.addEventListener('click', function() {
                     sectionTitles.forEach(s => s.classList.remove('bg-blue-100'));
                     this.classList.add('bg-blue-100');
                     const sectionName = this.getAttribute('data-section');
-                    if (templateTitle && templateContent && copyButton && inquiriesButton) {
-                        templateTitle.textContent = sectionName;
-                        templateContent.innerHTML = sectionContent[sectionName] || "";
-                        copyButton.classList.remove('hidden');
-                        inquiriesButton.classList.toggle('hidden', sectionName !== 'RT Ticket Flow');
+                    templateTitle.textContent = sectionName;
+                    templateContent.innerHTML = sectionName === 'RT Ticket Flow' ? defaultContent : sectionContent[sectionName] || '';
+                    copyButton.classList.remove('hidden');
+                    inquiriesButton.classList.toggle('hidden', sectionName !== 'RT Ticket Flow');
+                    attachCardTitleListeners(); // Reattach listeners after content update
+
+                    // Hide step descriptions for RT Ticket Flow and add click handler
+                    if (sectionName === 'RT Ticket Flow') {
+                        templateContent.querySelectorAll('.step-description').forEach(desc => desc.classList.add('hidden'));
+                        templateContent.querySelectorAll('.step-container').forEach(step => {
+                            step.style.cursor = 'pointer';
+                            step.addEventListener('click', handleStepClick);
+                        });
+                    }
+                });
+
+                // Add keyboard support for sections
+                section.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        this.click();
                     }
                 });
             });
 
-            // Copy button copies the content
-            if (copyButton) {
-                copyButton.addEventListener('click', () => {
-                    if (templateContent) {
-                        const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .card-title, .card-content, .card-bullets li, .card-note'))
-                            .map(el => el.textContent.trim())
-                            .filter(text => text)
-                            .join('\n');
-                        navigator.clipboard.writeText(textContent).then(() => {
-                            copyButton.textContent = 'Copied!';
-                            setTimeout(() => {
-                                copyButton.textContent = 'Copy Template';
-                            }, 1500);
-                        });
-                    }
+            // Copy button functionality
+            copyButton.addEventListener('click', () => {
+                const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .card-title, .card-content p, .card-bullets li, .card-note'))
+                    .map(el => el.textContent.trim())
+                    .filter(text => text)
+                    .join('\n');
+                navigator.clipboard.writeText(textContent).then(() => {
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => copyButton.textContent = 'Copy Template', 1500);
                 });
-            }
+            });
 
-            // Inquiries button shows RT Ticket Inquiries
-            if (inquiriesButton) {
-                inquiriesButton.addEventListener('click', () => {
-                    if (templateTitle && templateContent) {
-                        templateTitle.textContent = 'RT Ticket Inquiries';
-                        templateContent.innerHTML = sectionContent['RT Ticket Inquiries'];
-                        copyButton.classList.remove('hidden');
-                    }
-                });
-            }
+            // Inquiries button functionality
+            inquiriesButton.addEventListener('click', () => {
+                templateTitle.textContent = 'RT Ticket Inquiries';
+                templateContent.innerHTML = sectionContent['RT Ticket Inquiries'];
+                copyButton.classList.remove('hidden');
+                attachCardTitleListeners(); // Reattach listeners for new card titles
+            });
 
-            // Show RT Ticket Flow as default selected
+            // Set default section and hide step descriptions for RT Ticket Flow
             if (sectionTitles.length > 0) {
-                sectionTitles.forEach(s => s.classList.remove('bg-blue-100'));
                 sectionTitles[0].classList.add('bg-blue-100');
-                sectionTitles[0].click();
+                sectionTitles[0].focus();
+                // Ensure RT Ticket Flow is default and step descriptions are hidden
+                templateTitle.textContent = 'RT Ticket Flow';
+                templateContent.innerHTML = defaultContent;
+                templateContent.querySelectorAll('.step-description').forEach(desc => desc.classList.add('hidden'));
+                templateContent.querySelectorAll('.step-container').forEach(step => {
+                    step.style.cursor = 'pointer';
+                    step.addEventListener('click', handleStepClick);
+                });
             }
-        });
 
-        // Function to toggle collapse/expand
-        function toggleCollapse(element) {
-            const content = element.nextElementSibling;
-            element.classList.toggle('collapsed');
-            content.classList.toggle('collapsed');
-        }
+            // Initial attachment of card title listeners
+            attachCardTitleListeners();
+        });
     </script>
 </body>
 </html>
