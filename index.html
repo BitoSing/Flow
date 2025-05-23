@@ -109,24 +109,24 @@
             font-size: 0.95rem;
             line-height: 1.5;
         }
-        .step-container, .inquiry-card {
+        .step-container {
             flex: 1 1 220px;
             min-width: 220px;
             max-width: 260px;
             margin: 0.5rem;
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
+            border-radius: 0.75rem;
             padding: 1rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
-        .step-container:hover, .inquiry-card:hover {
+        .step-container:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
-        .number-icon, .card-number {
+        .number-icon {
             flex: 0 0 auto;
             width: 28px;
             height: 28px;
@@ -138,49 +138,95 @@
             justify-content: center;
             font-weight: bold;
             font-size: 0.9rem;
-            margin-right: 0.75rem;
         }
         .step-icon {
             width: 24px;
             height: 24px;
             color: #3b82f6;
-            margin-right: 0.75rem;
         }
         .connector-svg {
             width: 40px;
             height: 40px;
             flex: 0 0 40px;
         }
-        .step-title, .card-title {
+        .step-title {
             color: #1e3a8a;
             font-weight: 600;
             font-size: 1rem;
-            display: flex;
-            align-items: center;
         }
-        .step-description, .card-description {
+        .step-description {
             color: #4b5563;
             font-size: 0.9rem;
             margin-top: 0.5rem;
         }
-        .step-bullets, .card-bullets {
+        .step-bullets {
             list-style-type: disc;
             padding-left: 1.5rem;
             margin-top: 0.5rem;
         }
-        .step-bullets li, .card-bullets li {
+        .step-bullets li {
             color: #6b7280;
             font-size: 0.85rem;
             padding: 0.25rem 0;
         }
         .inquiry-card {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            flex: 1 1 220px;
+            min-width: 220px;
+            max-width: 260px;
+            margin: 0.5rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
         }
-        .card-header {
+        .inquiry-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
             display: flex;
+            justify-content: space-between;
             align-items: center;
+        }
+        .card-title::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: #3b82f6;
+            transition: transform 0.3s ease;
+        }
+        .card-title.collapsed::after {
+            content: '▶';
+        }
+        .card-content {
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: block;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            max-height: 500px;
+            opacity: 1;
+        }
+        .card-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .card-bullets {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .card-bullets li {
+            color: #6b7280;
+            font-size: 0.85rem;
+            padding: 0.25rem 0;
         }
         .card-note {
             font-weight: 600;
@@ -642,14 +688,8 @@
                 "RT Ticket Inquiries": `
                     <div class="flex flex-row flex-wrap items-start gap-2">
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">1</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                <span class="card-title">Service Availability (Technical-Issue) (Time Frame - 24 hours)</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Service Availability (Technical-Issue) (Time Frame - 24 hours)</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Alarm / Lastsmile</li>
                                     <li>Many ONU Down/PON Down</li>
@@ -660,14 +700,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">2</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span class="card-title">Fulfillment (Time Frame - 24 hours)</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Fulfillment (Time Frame - 24 hours)</div>
+                            <div class="card-content">
                                 <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
                                 <ul class="card-bullets">
                                     <li>Request Relocate / Re-Configure Modem</li>
@@ -683,14 +717,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">3</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                </svg>
-                                <span class="card-title">Service Performance (Technical-Issue) (Time Frame - 24 hours)</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Service Performance (Technical-Issue) (Time Frame - 24 hours)</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Internet Slow</li>
                                     <li>Internet Unstable</li>
@@ -705,14 +733,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">4</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8 8 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8 8 0 01-15.356-2m15.356 2H15" />
-                                </svg>
-                                <span class="card-title">Re-activation (Queue ActivationTeam)</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Re-activation (Queue ActivationTeam)</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Connection which already dismantled with infrastructure provider</li>
                                     <li>Connection which already terminated and removed connectivity/port/device</li>
@@ -720,14 +742,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">5</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                                <span class="card-title">Change Order: Queue Customer Delivery</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Change Order: Queue Customer Delivery</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Update Profile</li>
                                     <li>Upgrade Speed</li>
@@ -742,14 +758,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">6</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m-2-5h4m-4 0h2m-2 0h-2m2 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span class="card-title">Open Invoice Activities: Queue CareCollection</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Open Invoice Activities: Queue CareCollection</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
                                     <li>Renewal + Promotion (Has Pending Invoice)</li>
@@ -761,14 +771,8 @@
                             </div>
                         </div>
                         <div class="inquiry-card">
-                            <div class="card-header">
-                                <span class="card-number">7</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-6 6l6 6m-6-6l-6 6" />
-                                </svg>
-                                <span class="card-title">Billing Issues (Non - Open Invoice): Queue CareRenewal</span>
-                            </div>
-                            <div class="card-description">
+                            <div class="card-title" onclick="toggleCollapse(this)">Billing Issues (Non - Open Invoice): Queue CareRenewal</div>
+                            <div class="card-content">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice</li>
                                     <li>Renewal + Promotion</li>
@@ -801,7 +805,7 @@
             if (copyButton) {
                 copyButton.addEventListener('click', () => {
                     if (templateContent) {
-                        const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .card-title, .card-description, .card-bullets li, .card-note'))
+                        const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .card-title, .card-content, .card-bullets li, .card-note'))
                             .map(el => el.textContent.trim())
                             .filter(text => text)
                             .join('\n');
@@ -833,6 +837,13 @@
                 sectionTitles[0].click();
             }
         });
+
+        // Function to toggle collapse/expand
+        function toggleCollapse(element) {
+            const content = element.nextElementSibling;
+            element.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+        }
     </script>
 </body>
 </html>
