@@ -196,13 +196,13 @@
             align-items: center;
         }
         .card-title::after {
-            content: '▼';
+            content: '▶';
             font-size: 0.8rem;
             color: #3b82f6;
             transition: transform 0.3s ease;
         }
         .card-title.collapsed::after {
-            content: '▶';
+            content: '▼';
         }
         .card-content {
             color: #4b5563;
@@ -689,7 +689,7 @@
                     <div class="flex flex-row flex-wrap items-start gap-2">
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Service Availability (Technical-Issue) (Time Frame - 24 hours)</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Alarm / Lastsmile</li>
                                     <li>Many ONU Down/PON Down</li>
@@ -701,7 +701,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Fulfillment (Time Frame - 24 hours)</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
                                 <ul class="card-bullets">
                                     <li>Request Relocate / Re-Configure Modem</li>
@@ -718,7 +718,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Service Performance (Technical-Issue) (Time Frame - 24 hours)</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Internet Slow</li>
                                     <li>Internet Unstable</li>
@@ -734,7 +734,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Re-activation (Queue ActivationTeam)</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Connection which already dismantled with infrastructure provider</li>
                                     <li>Connection which already terminated and removed connectivity/port/device</li>
@@ -743,7 +743,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Change Order: Queue Customer Delivery</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Update Profile</li>
                                     <li>Upgrade Speed</li>
@@ -759,7 +759,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Open Invoice Activities: Queue CareCollection</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
                                     <li>Renewal + Promotion (Has Pending Invoice)</li>
@@ -772,7 +772,7 @@
                         </div>
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Billing Issues (Non - Open Invoice): Queue CareRenewal</div>
-                            <div class="card-content">
+                            <div class="card-content collapsed">
                                 <ul class="card-bullets">
                                     <li>Refuse to Pay Invoice</li>
                                     <li>Renewal + Promotion</li>
