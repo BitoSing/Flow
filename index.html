@@ -169,11 +169,13 @@
             font-size: 0.85rem;
             padding: 0.25rem 0;
         }
+        .inquiries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
         .inquiry-card {
-            flex: 1 1 220px;
-            min-width: 220px;
-            max-width: 260px;
-            margin: 0.5rem;
+            width: 100%;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 0.75rem;
@@ -254,7 +256,15 @@
             .data-item {
                 flex-direction: column;
             }
-            .step-container, .inquiry-card {
+            .step-container {
+                min-width: 100%;
+                max-width: 100%;
+                margin: 0.5rem 0;
+            }
+            .inquiries-grid {
+                grid-template-columns: 1fr;
+            }
+            .inquiry-card {
                 min-width: 100%;
                 max-width: 100%;
                 margin: 0.5rem 0;
@@ -686,7 +696,7 @@
                 "Retention Team Flow": "This section describes the Retention Team Flow process. Add your flow steps or documentation here.",
                 "Collection Team Flow": "This section describes the Collection Team Flow process. Add your flow steps or documentation here.",
                 "RT Ticket Inquiries": `
-                    <div class="flex flex-row flex-wrap items-start gap-2">
+                    <div class="inquiries-grid">
                         <div class="inquiry-card">
                             <div class="card-title" onclick="toggleCollapse(this)">Service Availability (Technical-Issue) (Time Frame - 24 hours)</div>
                             <div class="card-content collapsed">
