@@ -43,7 +43,9 @@
         .book-wrapper {
             display: flex;
             max-width: 1400px;
-            margin: var(--spacing-lg) auto;
+            min-width: 1200px; /* Stabilize layout width */
+            height: 100vh; /* Fix height to fit the entire viewport */
+            margin: 0 auto; /* Center horizontally */
             background: var(--bg-white);
             border-radius: 1.5rem;
             box-shadow: var(--shadow-sm);
@@ -66,6 +68,7 @@
             scrollbar-width: thin;
             scrollbar-color: var(--primary-color) #e6f0fa;
             background: var(--bg-white);
+            min-width: 0; /* Prevent content from forcing the wrapper to expand */
         }
 
         /* Sidebar Components */
@@ -154,7 +157,8 @@
             margin: var(--spacing-sm);
             background: var(--bg-white);
             border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary-color); /* Add left border */
+            border-radius: 0.75rem; /* Rounded corners */
             padding: var(--spacing-md);
             box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -221,78 +225,40 @@
             gap: var(--spacing-md);
         }
 
-        .inquiry-card {
-            width: 100%;
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: var(--spacing-md);
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
+        /* Add for RT Ticket Inquiries: 2 columns, fixed width */
+        .step-inquiries-grid {
+            grid-template-columns: repeat(3, 340px);
+            justify-content: center;
         }
 
-        .inquiry-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+        @media (max-width: 900px) {
+            .step-inquiries-grid {
+                grid-template-columns: 1fr;
+                justify-content: stretch;
+            }
         }
 
-        .card-title {
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: var(--font-size-lg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            cursor: pointer;
+        .step-inquiries-grid .step-container {
+            min-width: 340px;
+            max-width: 340px;
         }
 
-        .card-title::after {
-            content: '▶';
-            font-size: var(--font-size-sm);
-            color: var(--primary-color);
-            transition: transform 0.3s ease;
+        /* RT Ticket Inquiries Specific Styles */
+        .rt-inquiries-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: var(--spacing-md);
         }
 
-        .card-title.collapsed::after {
-            content: '▼';
+        .rt-inquiries-grid .step-container {
+            min-width: 0; /* Allow flexible resizing */
+            max-width: 100%; /* Fit within the grid */
         }
 
-        .card-content {
-            color: var(--text-muted);
-            font-size: var(--font-size-base);
-            margin-top: var(--spacing-sm);
-            display: block;
-            transition: max-height 0.3s ease, opacity 0.3s ease;
-            max-height: 500px;
-            opacity: 1;
-        }
-
-        .card-content.collapsed {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-
-        .card-bullets {
-            list-style-type: disc;
-            padding-left: var(--spacing-lg);
-            margin-top: var(--spacing-sm);
-        }
-
-        .card-bullets li {
-            color: var(--text-light);
-            font-size: var(--font-size-sm);
-            padding: 0.25rem 0;
-        }
-
-        .card-note {
-            font-weight: 600;
-            color: var(--text-dark);
+        @media (max-width: 768px) {
+            .rt-inquiries-grid {
+                grid-template-columns: 1fr; /* Single column for smaller screens */
+            }
         }
 
         /* Media Queries */
@@ -349,6 +315,93 @@
                 font-size: var(--font-size-sm);
             }
         }
+
+        /* RT Ticket Flow details output area styling */
+        #rtFlowDetailsOutput {
+            background: #fff;
+            border: 2px solid var(--primary-color);
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(30,58,138,0.07);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            margin-top: 2rem;
+            min-height: 80px;
+            max-width: 100%; /* Align with card container width */
+            width: calc(100%); /* Match padding of content-area */
+            margin-left: auto;
+            margin-right: auto;
+            transition: box-shadow 0.2s;
+        }
+        #rtFlowDetailsOutput .rt-detail-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        #rtFlowDetailsOutput .rt-detail-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        #rtFlowDetailsOutput .step-description {
+            margin-top: 0.5rem;
+            background: none;
+            border-radius: 0;
+            padding: 0;
+        }
+        #rtFlowDetailsOutput .step-bullets {
+            margin-top: 0.5rem;
+        }
+
+        /* Remove black outline from default state */
+        .section-title {
+            outline: none; /* Ensure no outline by default */
+        }
+
+        .section-title:focus {
+            outline: 2px solid var(--primary-color); /* Add outline only on focus */
+            outline-offset: 2px;
+        }
+
+        /* Add transition for step descriptions */
+        .step-description {
+            max-height: 0;
+            overflow: hidden; /* Default state: no scrolling */
+            transition: max-height 0.1s ease, padding 0.1s ease;
+        }
+
+        .step-container[aria-expanded="true"] .step-description {
+            max-height: 155px; /* Set a maximum height for the description */
+            overflow-y: auto; /* Enable vertical scrolling when expanded */
+            padding-top: var(--spacing-sm); /* Add padding when expanded */
+        }
+
+        .step-description {
+            position: relative; /* Ensure the container is positioned properly */
+            padding-right: 10px; /* Add padding to prevent content from overlapping the scrollbar */
+        }
+
+        .step-description::-webkit-scrollbar {
+            width: 6px; /* Customize scrollbar width */
+        }
+
+        .step-description::-webkit-scrollbar-thumb {
+            background: var(--primary-color); /* Customize scrollbar color */
+            border-radius: 3px;
+        }
+
+        .step-description::-webkit-scrollbar-track {
+            background: var(--bg-light); /* Customize scrollbar track color */
+        }
     </style>
 </head>
 <body>
@@ -377,6 +430,7 @@
             </div>
             <div id="templateContent" class="data-item">
                 <div class="flex flex-row flex-wrap items-start gap-2">
+                    <!-- Step 1 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
@@ -398,15 +452,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
                     </svg>
+
+                    <!-- Step 2 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
@@ -428,15 +478,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
                     </svg>
+
+                    <!-- Step 3 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
@@ -444,7 +490,7 @@
                                 <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a2 2 0 00-2-2h-3m-2-2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v7" />
                                 </svg>
-                                <span class="step-title">Assign Team</span>
+                                <span class="step-title">CCare Ticket Inquiries</span>
                             </div>
                             <div class="step-description">
                                 RT Team responsible all inquiries in Queue CareRenewal and CareCollection.
@@ -452,15 +498,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
                     </svg>
+
+                    <!-- Step 4 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
@@ -480,23 +522,39 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
                     </svg>
+
+                    <!-- Step 5 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">5</span>
                                 <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="step-title">Pickup / Assign</span>
+                            </div>
+                            <div class="step-description">
+                                Create CCare Ticket for the performance.
+                            </div>
+                        </div>
+                    </div>
+                    <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
+                    </svg>
+
+                    <!-- Step 6 -->
+                    <div class="step-container">
+                        <div class="flex flex-col items-start gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="number-icon">6</span>
+                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span class="step-title">Resolve/Escalate</span>
+                                <span class="step-title">Track Performance</span>
                             </div>
                             <div class="step-description">
                                 <ul class="step-bullets">
@@ -507,39 +565,11 @@
                         </div>
                     </div>
                     <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
+                        <path d="M5 20L35 20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" />
+                        <path d="M30 15L35 20L30 25" fill="#1e3a8a" />
                     </svg>
-                    <div class="step-container">
-                        <div class="flex flex-col items-start gap-2">
-                            <div class="flex items-center gap-2">
-                                <span class="number-icon">6</span>
-                                <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span class="step-title">Track Performance</span>
-                            </div>
-                            <div class="step-description">
-                                Create CCare Ticket for the performance.
-                            </div>
-                        </div>
-                    </div>
-                    <svg class="connector-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 20C5 20, 15 10, 35 20" stroke="url(#grad6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/>
-                        <path d="M30 15L35 20L30 25" fill="none" stroke="url(#grad6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
+
+                    <!-- Step 7 -->
                     <div class="step-container">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
@@ -547,7 +577,7 @@
                                 <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span class="step-title">Close Ticket</span>
+                                <span class="step-title">Resolve/Close Ticket</span>
                             </div>
                             <div class="step-description">
                                 Mark ticket as 'Resolved,' send customer confirmation, and monitor follow-ups.
@@ -592,142 +622,164 @@
                     </div>
                 `,
                 "RT Ticket Inquiries": `
-                    <div class="inquiries-grid">
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-1">Service Availability (Technical-Issue) (Time Frame - 24 hours)</button>
-                            <div class="card-content collapsed" id="inquiry-1">
-                                <ul class="card-bullets">
-                                    <li>Alarm / Lastsmile</li>
-                                    <li>Many ONU Down/PON Down</li>
-                                    <li>Internet Not Working</li>
-                                    <li>No WiFi Signal</li>
-                                    <li><span class="card-note">Note:</span> Ticket Created from CCare send to Digital Team only</li>
-                                </ul>
+                    <div class="rt-inquiries-grid">
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">1</span>
+                                    <span class="step-title">Service Availability (Technical-Issue) (Time Frame - 24 hours)</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Alarm / Lastsmile</li>
+                                        <li>Many ONU Down/PON Down</li>
+                                        <li>Internet Not Working</li>
+                                        <li>No WiFi Signal</li>
+                                        <li><span class="card-note">Note:</span> Ticket Created from CCare send to Digital Team only</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-2">Fulfillment (Time Frame - 24 hours)</button>
-                            <div class="card-content collapsed" id="inquiry-2">
-                                <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
-                                <ul class="card-bullets">
-                                    <li>Request Relocate / Re-Configure Modem</li>
-                                    <li>Request Configure / Re-Configure Router / Access Point</li>
-                                    <li>Request Username / Password Login Modem / Router</li>
-                                    <li>Request Change Username / Password WiFi Modem / Router</li>
-                                    <li>Request Configure Remote Camera</li>
-                                    <li>Request NAT Domain / Static IP for Remote Camera</li>
-                                    <li>Request Survey LAN/Wi-Fi</li>
-                                    <li>Request to add graph / share graph utilization</li>
-                                    <li>Request to enable/disable MAC address</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">2</span>
+                                    <span class="step-title">Fulfillment (Time Frame - 24 hours)</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
+                                    <ul class="step-bullets">
+                                        <li>Request Relocate / Re-Configure Modem</li>
+                                        <li>Request Configure / Re-Configure Router / Access Point</li>
+                                        <li>Request Username / Password Login Modem / Router</li>
+                                        <li>Request Change Username / Password WiFi Modem / Router</li>
+                                        <li>Request Configure Remote Camera</li>
+                                        <li>Request NAT Domain / Static IP for Remote Camera</li>
+                                        <li>Request Survey LAN/Wi-Fi</li>
+                                        <li>Request to add graph / share graph utilization</li>
+                                        <li>Request to enable/disable MAC address</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-3">Service Performance (Technical-Issue) (Time Frame - 24 hours)</button>
-                            <div class="card-content collapsed" id="inquiry-3">
-                                <ul class="card-bullets">
-                                    <li>Internet Slow</li>
-                                    <li>Internet Unstable</li>
-                                    <li>WiFi Low Signal</li>
-                                    <li>Link Budget Low or High</li>
-                                    <li>Website Issue</li>
-                                    <li>App Issue</li>
-                                    <li>Game Issue</li>
-                                    <li>Port Access</li>
-                                    <li>Protocol / Port Accessing Issue</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">3</span>
+                                    <span class="step-title">Service Performance (Technical-Issue) (Time Frame - 24 hours)</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Internet Slow</li>
+                                        <li>Internet Unstable</li>
+                                        <li>WiFi Low Signal</li>
+                                        <li>Link Budget Low or High</li>
+                                        <li>Website Issue</li>
+                                        <li>App Issue</li>
+                                        <li>Game Issue</li>
+                                        <li>Port Access</li>
+                                        <li>Protocol / Port Accessing Issue</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-4">Re-activation (Queue ActivationTeam)</button>
-                            <div class="card-content collapsed" id="inquiry-4">
-                                <ul class="card-bullets">
-                                    <li>Connection which already dismantled with infrastructure provider</li>
-                                    <li>Connection which already terminated and removed connectivity/port/device</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">4</span>
+                                    <span class="step-title">Re-activation (Queue ActivationTeam)</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Connection which already dismantled with infrastructure provider</li>
+                                        <li>Connection which already terminated and removed connectivity/port/device</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-5">Change Order: Queue Customer Delivery</button>
-                            <div class="card-content collapsed" id="inquiry-5">
-                                <ul class="card-bullets">
-                                    <li>Update Profile</li>
-                                    <li>Upgrade Speed</li>
-                                    <li>Downgrade Speed</li>
-                                    <li>Test Speed</li>
-                                    <li>Change Billing Date</li>
-                                    <li>Change Location</li>
-                                    <li>Change Account Name</li>
-                                    <li>Purchase CPE</li>
-                                    <li>Purchase Static IP</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">5</span>
+                                    <span class="step-title">Change Order: Queue Customer Delivery</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Update Profile</li>
+                                        <li>Upgrade Speed</li>
+                                        <li>Downgrade Speed</li>
+                                        <li>Test Speed</li>
+                                        <li>Change Billing Date</li>
+                                        <li>Change Location</li>
+                                        <li>Change Account Name</li>
+                                        <li>Purchase CPE</li>
+                                        <li>Purchase Static IP</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-6">Open Invoice Activities: Queue CareCollection</button>
-                            <div class="card-content collapsed" id="inquiry-6">
-                                <ul class="card-bullets">
-                                    <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
-                                    <li>Renewal + Promotion (Has Pending Invoice)</li>
-                                    <li>Reactive Request (Has Pending Invoice)</li>
-                                    <li>Terminate Request (Has Pending Invoice)</li>
-                                    <li>Request Compensation (Has Pending Invoice)</li>
-                                    <li>Request Refund (Has Pending Invoice)</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">6</span>
+                                    <span class="step-title">Open Invoice Activities: Queue CareCollection</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
+                                        <li>Renewal + Promotion (Has Pending Invoice)</li>
+                                        <li>Reactive Request (Has Pending Invoice)</li>
+                                        <li>Terminate Request (Has Pending Invoice)</li>
+                                        <li>Request Compensation (Has Pending Invoice)</li>
+                                        <li>Request Refund (Has Pending Invoice)</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="inquiry-card">
-                            <button class="card-title" aria-expanded="false" aria-controls="inquiry-7">Billing Issues (Non - Open Invoice): Queue CareRenewal</button>
-                            <div class="card-content collapsed" id="inquiry-7">
-                                <ul class="card-bullets">
-                                    <li>Refuse to Pay Invoice</li>
-                                    <li>Renewal + Promotion</li>
-                                    <li>Reactive Request</li>
-                                    <li>Terminate Request</li>
-                                    <li>Request Compensation</li>
-                                    <li>Request Refund</li>
-                                </ul>
+                        <div class="step-container">
+                            <div class="flex flex-col items-start gap-2">
+                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                    <span class="number-icon">7</span>
+                                    <span class="step-title">Billing Issues (Non - Open Invoice): Queue CareRenewal</span>
+                                </div>
+                                <div class="step-description card-content hidden">
+                                    <ul class="step-bullets">
+                                        <li>Refuse to Pay Invoice</li>
+                                        <li>Renewal + Promotion</li>
+                                        <li>Reactive Request</li>
+                                        <li>Terminate Request</li>
+                                        <li>Request Compensation</li>
+                                        <li>Request Refund</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 `
             };
 
-            // Function to attach event listeners to card titles
-            function attachCardTitleListeners() {
-                document.querySelectorAll('.card-title').forEach(title => {
-                    // Remove existing listeners to prevent duplicates
-                    title.removeEventListener('click', handleCardClick);
-                    title.removeEventListener('keydown', handleCardKeydown);
-                    // Add new listeners
-                    title.addEventListener('click', handleCardClick);
-                    title.addEventListener('keydown', handleCardKeydown);
-                });
-            }
-
-            // Handle card title click
-            function handleCardClick() {
-                const content = this.nextElementSibling;
+            // Function to toggle collapse/expand for step descriptions
+            function handleStepClick() {
                 const isExpanded = this.getAttribute('aria-expanded') === 'true';
                 this.setAttribute('aria-expanded', !isExpanded);
-                this.classList.toggle('collapsed');
-                content.classList.toggle('collapsed');
-            }
 
-            // Handle card title keydown
-            function handleCardKeydown(event) {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    handleCardClick.call(this);
+                const description = this.querySelector('.step-description');
+                if (description) {
+                    description.classList.toggle('hidden', isExpanded); // Toggle visibility
                 }
             }
 
-            // Toggle step description visibility for RT Ticket Flow
-            function handleStepClick(e) {
-                // Only toggle if clicking on the step-container, not on SVG or number
-                if (!e.currentTarget.contains(e.target)) return;
-                const desc = e.currentTarget.querySelector('.step-description');
-                if (desc) desc.classList.toggle('hidden');
+            // Attach click listeners to step containers
+            function attachStepListeners() {
+                templateContent.querySelectorAll('.step-container').forEach(step => {
+                    step.removeEventListener('click', handleStepClick);
+                    step.addEventListener('click', handleStepClick);
+                    step.setAttribute('aria-expanded', 'false'); // Initialize as collapsed
+                    const description = step.querySelector('.step-description');
+                    if (description) {
+                        description.classList.add('hidden'); // Ensure descriptions are hidden by default
+                    }
+                });
             }
 
             // Handle section clicks
@@ -740,16 +792,7 @@
                     templateContent.innerHTML = sectionName === 'RT Ticket Flow' ? defaultContent : sectionContent[sectionName] || '';
                     copyButton.classList.remove('hidden');
                     inquiriesButton.classList.toggle('hidden', sectionName !== 'RT Ticket Flow');
-                    attachCardTitleListeners(); // Reattach listeners after content update
-
-                    // Hide step descriptions for RT Ticket Flow and add click handler
-                    if (sectionName === 'RT Ticket Flow') {
-                        templateContent.querySelectorAll('.step-description').forEach(desc => desc.classList.add('hidden'));
-                        templateContent.querySelectorAll('.step-container').forEach(step => {
-                            step.style.cursor = 'pointer';
-                            step.addEventListener('click', handleStepClick);
-                        });
-                    }
+                    attachStepListeners(); // Reattach listeners after content update
                 });
 
                 // Add keyboard support for sections
@@ -763,7 +806,7 @@
 
             // Copy button functionality
             copyButton.addEventListener('click', () => {
-                const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li, .card-title, .card-content p, .card-bullets li, .card-note'))
+                const textContent = Array.from(templateContent.querySelectorAll('.step-title, .step-description, .step-bullets li'))
                     .map(el => el.textContent.trim())
                     .filter(text => text)
                     .join('\n');
@@ -778,25 +821,19 @@
                 templateTitle.textContent = 'RT Ticket Inquiries';
                 templateContent.innerHTML = sectionContent['RT Ticket Inquiries'];
                 copyButton.classList.remove('hidden');
-                attachCardTitleListeners(); // Reattach listeners for new card titles
+                attachStepListeners(); // Reattach listeners for new card titles
             });
 
-            // Set default section and hide step descriptions for RT Ticket Flow
+            // Set default section and attach listeners for RT Ticket Flow
             if (sectionTitles.length > 0) {
                 sectionTitles[0].classList.add('bg-blue-100');
-                sectionTitles[0].focus();
-                // Ensure RT Ticket Flow is default and step descriptions are hidden
                 templateTitle.textContent = 'RT Ticket Flow';
                 templateContent.innerHTML = defaultContent;
-                templateContent.querySelectorAll('.step-description').forEach(desc => desc.classList.add('hidden'));
-                templateContent.querySelectorAll('.step-container').forEach(step => {
-                    step.style.cursor = 'pointer';
-                    step.addEventListener('click', handleStepClick);
-                });
-            }
+                attachStepListeners(); // Attach listeners for default content
 
-            // Initial attachment of card title listeners
-            attachCardTitleListeners();
+                // Remove focus from the default section to prevent the black outline
+                sectionTitles[0].blur();
+            }
         });
     </script>
 </body>
