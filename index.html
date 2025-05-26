@@ -555,12 +555,12 @@
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">3</span>
                                 <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a2 2 0 00-2-2h-3m-2-2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v7" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a2 2 0 00-2-2h-3m-2-2H5v-6m16 4v7" />
                                 </svg>
                                 <span class="step-title">CCare Ticket Inquiries</span>
                             </div>
                             <div class="step-description hidden">
-                                RT Team responsible all inquiries in Queue CareRenewal and CareCollection.
+                                RT Team responsible for all inquiries in Queue CareRenewal and CareCollection.
                             </div>
                         </div>
                     </div>
@@ -689,87 +689,35 @@
                 `,
                 "RT Ticket Inquiries": `
                     <div class="rt-inquiries-grid">
+                        <!-- Queue - CareRenewal + CareCollection (Open Invoice) -->
                         <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
                                 <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">1</span>
-                                    <span class="step-title">Service Availability (Technical-Issue) (Time Frame - 24 hours)</span>
+                                    <span class="step-title">CareRenewal + CareCollection (Open Invoice)</span>
                                 </div>
                                 <div class="step-description card-content hidden">
+                                    <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
-                                        <li>Alarm / Lastsmile</li>
-                                        <li>Many ONU Down/PON Down</li>
-                                        <li>Internet Not Working</li>
-                                        <li>No WiFi Signal</li>
-                                        <li><span class="card-note">Note:</span> Ticket Created from CCare send to Digital Team only</li>
+                                        <li>Refuse to pay invoice</li>
+                                        <li>Renewal + Promotion</li>
+                                        <li>Reactive Request</li>
+                                        <li>Terminate Request</li>
+                                        <li>Request Compensation</li>
+                                        <li>Request Refund</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        <!-- Queue - Customer Delivery -->
                         <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
                                 <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">2</span>
-                                    <span class="step-title">Fulfillment (Time Frame - 24 hours)</span>
+                                    <span class="step-title">Customer Delivery</span>
                                 </div>
                                 <div class="step-description card-content hidden">
-                                    <p>The type of ticket what customer request to support that not refer to our service down or performance issue</p>
-                                    <ul class="step-bullets">
-                                        <li>Request Relocate / Re-Configure Modem</li>
-                                        <li>Request Configure / Re-Configure Router / Access Point</li>
-                                        <li>Request Username / Password Login Modem / Router</li>
-                                        <li>Request Change Username / Password WiFi Modem / Router</li>
-                                        <li>Request Configure Remote Camera</li>
-                                        <li>Request NAT Domain / Static IP for Remote Camera</li>
-                                        <li>Request Survey LAN/Wi-Fi</li>
-                                        <li>Request to add graph / share graph utilization</li>
-                                        <li>Request to enable/disable MAC address</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-container" aria-expanded="false">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
-                                    <span class="number-icon">3</span>
-                                    <span class="step-title">Service Performance (Technical-Issue) (Time Frame - 24 hours)</span>
-                                </div>
-                                <div class="step-description card-content hidden">
-                                    <ul class="step-bullets">
-                                        <li>Internet Slow</li>
-                                        <li>Internet Unstable</li>
-                                        <li>WiFi Low Signal</li>
-                                        <li>Link Budget Low or High</li>
-                                        <li>Website Issue</li>
-                                        <li>App Issue</li>
-                                        <li>Game Issue</li>
-                                        <li>Port Access</li>
-                                        <li>Protocol / Port Accessing Issue</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-container" aria-expanded="false">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
-                                    <span class="number-icon">4</span>
-                                    <span class="step-title">Re-activation (Queue ActivationTeam)</span>
-                                </div>
-                                <div class="step-description card-content hidden">
-                                    <ul class="step-bullets">
-                                        <li>Connection which already dismantled with infrastructure provider</li>
-                                        <li>Connection which already terminated and removed connectivity/port/device</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-container" aria-expanded="false">
-                            <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
-                                    <span class="number-icon">5</span>
-                                    <span class="step-title">Change Order: Queue Customer Delivery</span>
-                                </div>
-                                <div class="step-description card-content hidden">
+                                    <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
                                         <li>Update Profile</li>
                                         <li>Upgrade Speed</li>
@@ -784,38 +732,68 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Queue - Digital -->
                         <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
                                 <div class="flex items-center gap-2 card-title" tabindex="0">
-                                    <span class="number-icon">6</span>
-                                    <span class="step-title">Open Invoice Activities: Queue CareCollection</span>
+                                    <span class="number-icon">3</span>
+                                    <span class="step-title">Digital</span>
                                 </div>
                                 <div class="step-description card-content hidden">
+                                    <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
-                                        <li>Refuse to Pay Invoice (Has Pending Invoice)</li>
-                                        <li>Renewal + Promotion (Has Pending Invoice)</li>
-                                        <li>Reactive Request (Has Pending Invoice)</li>
-                                        <li>Terminate Request (Has Pending Invoice)</li>
-                                        <li>Request Compensation (Has Pending Invoice)</li>
-                                        <li>Request Refund (Has Pending Invoice)</li>
+                                        <li>Service Availability
+                                            <ul class="step-bullets">
+                                                <li>Alarm / Lastsmile</li>
+                                                <li>Many ONU Down/PON Down</li>
+                                                <li>Internet Not working</li>
+                                                <li>No WiFi Signal</li>
+                                                <li><strong>Note:</strong> Ticket Created from CCare send to Digital Team only</li>
+                                            </ul>
+                                        </li>
+                                        <li>Service Performance (Time Frame - 24 hours)
+                                            <ul class="step-bullets">
+                                                <li>Internet Slow</li>
+                                                <li>Internet Unstable</li>
+                                                <li>WiFi Low Signal</li>
+                                                <li>Link budget low or high</li>
+                                                <li>Website Issue</li>
+                                                <li>App issue</li>
+                                                <li>Game Issue</li>
+                                                <li>Port access</li>
+                                                <li>Protocol / Port accessing issue</li>
+                                            </ul>
+                                        </li>
+                                        <li>Fulfillment (Time Frame - 24 hours)
+                                            <ul class="step-bullets">
+                                                <li>The type of ticket what customer request to support that not refer to our service down or performance issue</li>
+                                                <li>Request relocate / Re-Configure Modem</li>
+                                                <li>Request Configure / Re-Configure Router / Access Point</li>
+                                                <li>Request Username / Password Login Modem / Router</li>
+                                                <li>Request Change Username / Password WiFi Modem / Router</li>
+                                                <li>Request Configure Remote Camera</li>
+                                                <li>Request NAT Domain / Static IP for Remote Camera</li>
+                                                <li>Request Survey LAN/Wi-Fi</li>
+                                                <li>Request to add graph / share graph utilization</li>
+                                                <li>Request to enable/disable MAC address</li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        <!-- Queue - ActivationTeam -->
                         <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
                                 <div class="flex items-center gap-2 card-title" tabindex="0">
-                                    <span class="number-icon">7</span>
-                                    <span class="step-title">Billing Issues (Non - Open Invoice): Queue CareRenewal</span>
+                                    <span class="number-icon">4</span>
+                                    <span class="step-title">ActivationTeam: Re-activation</span>
                                 </div>
                                 <div class="step-description card-content hidden">
+                                    <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
-                                        <li>Refuse to Pay Invoice</li>
-                                        <li>Renewal + Promotion</li>
-                                        <li>Reactive Request</li>
-                                        <li>Terminate Request</li>
-                                        <li>Request Compensation</li>
-                                        <li>Request Refund</li>
+                                        <li>Connection which already dismantled with infrastructure provider</li>
+                                        <li>Connection which already terminated and removed connectivity/port/device</li>
                                     </ul>
                                 </div>
                             </div>
