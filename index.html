@@ -153,7 +153,6 @@
         .step-container {
             flex: 1 1 220px;
             min-width: 220px;
-            max-width: 260px;
             margin: var(--spacing-sm);
             background: var(--bg-white);
             border: 1px solid var(--border-color);
@@ -162,7 +161,6 @@
             padding: var(--spacing-md);
             box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
         }
 
         .step-container:hover {
@@ -205,15 +203,23 @@
             color: var(--text-muted);
             font-size: var(--font-size-base);
             margin-top: var(--spacing-sm);
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: var(--spacing-sm) var(--spacing-sm);
+            display: block;
         }
 
-        .step-container[aria-expanded="true"] .step-description {
-            max-height: 200px;
-            overflow-y: auto;
-            padding-top: var(--spacing-sm);
+        /* Main Flow collapsible descriptions */
+        .main-flow .step-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+
+        .main-flow .step-container[aria-expanded="true"] .step-description {
+            max-height: 1000px;
+            padding-top: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            opacity: 1;
         }
 
         .step-bullets {
@@ -224,8 +230,27 @@
 
         .step-bullets li {
             color: var(--text-light);
-            font-size: var(--font-size-sm);
-            padding: 0.25rem 0;
+            font-size: 0.875rem;
+            padding: 0.3rem 0;
+            line-height: 1.6;
+        }
+
+        /* Nested list styling */
+        .step-bullets .step-bullets {
+            list-style-type: circle;
+            padding-left: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .step-bullets li strong {
+            color: var(--text-dark);
+        }
+
+        /* Add separators for Digital subsections */
+        .step-bullets > li + li {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
         }
 
         .inquiries-grid {
@@ -495,7 +520,7 @@
                     <button id="copyButton" class="copy-button">Copy Template</button>
                 </div>
             </div>
-            <div id="templateContent" class="data-item">
+            <div id="templateContent" class="data-item main-flow">
                 <div class="flex flex-row flex-wrap items-start gap-2">
                     <!-- Step 1 -->
                     <div class="step-container" aria-expanded="false">
@@ -507,7 +532,7 @@
                                 </svg>
                                 <span class="step-title">Receive Request</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 Request will received by:
                                 <ul class="step-bullets">
                                     <li>Facebook</li>
@@ -533,7 +558,7 @@
                                 </svg>
                                 <span class="step-title">Create Ticket</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 Ticket will created by:
                                 <ul class="step-bullets">
                                     <li>Tier1</li>
@@ -559,7 +584,7 @@
                                 </svg>
                                 <span class="step-title">CCare Ticket Inquiries</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 RT Team responsible for all inquiries in Queue CareRenewal and CareCollection.
                             </div>
                         </div>
@@ -579,7 +604,7 @@
                                 </svg>
                                 <span class="step-title">Analyze Issue</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 Agent reviews ticket, investigates issue, and documents findings in RT system.
                                 <ul class="step-bullets">
                                     <li>On Negotiation / Tracking: Ticket Status "Feedback", Timeline 5 days resolved.</li>
@@ -603,7 +628,7 @@
                                 </svg>
                                 <span class="step-title">Pickup / Assign</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 Create CCare Ticket for the performance.
                             </div>
                         </div>
@@ -623,7 +648,7 @@
                                 </svg>
                                 <span class="step-title">Track Performance</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 <ul class="step-bullets">
                                     <li>Paid within 24 hours (Promotion code date VS Payment date) Escalate to owner.</li>
                                     <li>After 24 hours RT Agent Activate and complete retain.</li>
@@ -646,7 +671,7 @@
                                 </svg>
                                 <span class="step-title">Resolve/Close Ticket</span>
                             </div>
-                            <div class="step-description hidden">
+                            <div class="step-description">
                                 Mark ticket as 'Resolved,' send customer confirmation, and monitor follow-ups.
                             </div>
                         </div>
@@ -690,13 +715,13 @@
                 "RT Ticket Inquiries": `
                     <div class="rt-inquiries-grid">
                         <!-- Queue - CareRenewal + CareCollection (Open Invoice) -->
-                        <div class="step-container" aria-expanded="false">
+                        <div class="step-container">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
+                                <div class="flex items-center gap-2" tabindex="0">
                                     <span class="number-icon">1</span>
                                     <span class="step-title">CareRenewal + CareCollection (Open Invoice)</span>
                                 </div>
-                                <div class="step-description card-content hidden">
+                                <div class="step-description">
                                     <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
                                         <li>Refuse to pay invoice</li>
@@ -710,13 +735,13 @@
                             </div>
                         </div>
                         <!-- Queue - Customer Delivery -->
-                        <div class="step-container" aria-expanded="false">
+                        <div class="step-container">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
+                                <div class="flex items-center gap-2" tabindex="0">
                                     <span class="number-icon">2</span>
                                     <span class="step-title">Customer Delivery</span>
                                 </div>
-                                <div class="step-description card-content hidden">
+                                <div class="step-description">
                                     <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
                                         <li>Update Profile</li>
@@ -733,13 +758,13 @@
                             </div>
                         </div>
                         <!-- Queue - Digital -->
-                        <div class="step-container" aria-expanded="false">
+                        <div class="step-container">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
+                                <div class="flex items-center gap-2" tabindex="0">
                                     <span class="number-icon">3</span>
                                     <span class="step-title">Digital</span>
                                 </div>
-                                <div class="step-description card-content hidden">
+                                <div class="step-description">
                                     <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
                                         <li>Service Availability
@@ -783,13 +808,13 @@
                             </div>
                         </div>
                         <!-- Queue - ActivationTeam -->
-                        <div class="step-container" aria-expanded="false">
+                        <div class="step-container">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0">
+                                <div class="flex items-center gap-2" tabindex="0">
                                     <span class="number-icon">4</span>
                                     <span class="step-title">ActivationTeam: Re-activation</span>
                                 </div>
-                                <div class="step-description card-content hidden">
+                                <div class="step-description">
                                     <p>Handling RT Inquiries:</p>
                                     <ul class="step-bullets">
                                         <li>Connection which already dismantled with infrastructure provider</li>
@@ -802,26 +827,34 @@
                 `
             };
 
-            // Function to toggle collapse/expand for step descriptions
+            // Function to toggle collapse/expand for Main Flow step descriptions
             function handleStepClick() {
                 const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                this.setAttribute('aria-expanded', !isExpanded);
-
                 const description = this.querySelector('.step-description');
+
                 if (description) {
-                    description.classList.toggle('hidden', isExpanded);
+                    if (!isExpanded) {
+                        description.style.maxHeight = description.scrollHeight + 'px';
+                        description.style.opacity = '1';
+                        this.setAttribute('aria-expanded', 'true');
+                    } else {
+                        description.style.maxHeight = '0';
+                        description.style.opacity = '0';
+                        this.setAttribute('aria-expanded', 'false');
+                    }
                 }
             }
 
-            // Attach click listeners to step containers
+            // Attach click listeners to step containers (Main Flow only)
             function attachStepListeners() {
-                templateContent.querySelectorAll('.step-container').forEach(step => {
+                templateContent.querySelectorAll('.main-flow .step-container').forEach(step => {
                     step.removeEventListener('click', handleStepClick);
                     step.addEventListener('click', handleStepClick);
-                    step.setAttribute('aria-expanded', 'false');
                     const description = step.querySelector('.step-description');
                     if (description) {
-                        description.classList.add('hidden');
+                        description.style.maxHeight = '0';
+                        description.style.opacity = '0';
+                        step.setAttribute('aria-expanded', 'false');
                     }
                 });
             }
@@ -873,8 +906,11 @@
                         const type = this.getAttribute('data-type');
                         templateTitle.textContent = type;
                         templateContent.innerHTML = type === 'Main Flow' ? defaultContent : sectionContent[type] || '';
+                        templateContent.classList.toggle('main-flow', type === 'Main Flow');
                         copyButton.classList.remove('hidden');
-                        attachStepListeners();
+                        if (type === 'Main Flow') {
+                            attachStepListeners();
+                        }
                     });
 
                     link.addEventListener('keydown', function(event) {
