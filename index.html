@@ -43,9 +43,9 @@
         .book-wrapper {
             display: flex;
             max-width: 1400px;
-            min-width: 1200px; /* Stabilize layout width */
-            height: 100vh; /* Fix height to fit the entire viewport */
-            margin: 0 auto; /* Center horizontally */
+            min-width: 1200px;
+            height: 100vh;
+            margin: 0 auto;
             background: var(--bg-white);
             border-radius: 1.5rem;
             box-shadow: var(--shadow-sm);
@@ -68,7 +68,7 @@
             scrollbar-width: thin;
             scrollbar-color: var(--primary-color) #e6f0fa;
             background: var(--bg-white);
-            min-width: 0; /* Prevent content from forcing the wrapper to expand */
+            min-width: 0;
         }
 
         /* Sidebar Components */
@@ -126,7 +126,7 @@
             color: var(--text-dark);
         }
 
-        .copy-button, .inquiries-button {
+        .copy-button {
             padding: var(--spacing-sm) var(--spacing-lg);
             background: var(--primary-color);
             color: var(--bg-white);
@@ -136,7 +136,7 @@
             margin-left: var(--spacing-sm);
         }
 
-        .copy-button:hover, .inquiries-button:hover {
+        .copy-button:hover {
             background: var(--primary-hover);
             transform: translateY(-1px);
         }
@@ -157,8 +157,8 @@
             margin: var(--spacing-sm);
             background: var(--bg-white);
             border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary-color); /* Add left border */
-            border-radius: 0.75rem; /* Rounded corners */
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0.75rem;
             padding: var(--spacing-md);
             box-shadow: var(--shadow-sm);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -205,6 +205,15 @@
             color: var(--text-muted);
             font-size: var(--font-size-base);
             margin-top: var(--spacing-sm);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+
+        .step-container[aria-expanded="true"] .step-description {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-top: var(--spacing-sm);
         }
 
         .step-bullets {
@@ -225,7 +234,6 @@
             gap: var(--spacing-md);
         }
 
-        /* Add for RT Ticket Inquiries: 2 columns, fixed width */
         .step-inquiries-grid {
             grid-template-columns: repeat(3, 340px);
             justify-content: center;
@@ -243,25 +251,108 @@
             max-width: 340px;
         }
 
-        /* RT Ticket Inquiries Specific Styles */
         .rt-inquiries-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-columns: repeat(2, 1fr);
             gap: var(--spacing-md);
         }
 
         .rt-inquiries-grid .step-container {
-            min-width: 0; /* Allow flexible resizing */
-            max-width: 100%; /* Fit within the grid */
+            min-width: 0;
+            max-width: 100%;
         }
 
         @media (max-width: 768px) {
             .rt-inquiries-grid {
-                grid-template-columns: 1fr; /* Single column for smaller screens */
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Media Queries */
+        /* Restyled Section Titles */
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0.5rem;
+            transition: background 0.2s ease, color 0.2s ease;
+            outline: none;
+        }
+
+        .section-title:hover {
+            background: #e6f0fa;
+            color: var(--primary-hover);
+        }
+
+        .section-title.active {
+            background: #dbeafe;
+            color: var(--text-dark);
+        }
+
+        .section-title:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .section-title svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        /* Subsection List */
+        .subsection-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .subsection-list.open {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .subsection-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .subsection-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .subsection-list::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        .subsection-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .subsection-link:hover, .subsection-link.active {
+            background: #e6f0fa;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
         @media (max-width: 1024px) {
             .book-wrapper {
                 flex-direction: column;
@@ -290,12 +381,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .inquiry-card {
-                min-width: 100%;
-                max-width: 100%;
-                margin: var(--spacing-sm) 0;
-            }
-
             .connector-svg {
                 transform: rotate(90deg);
                 margin: var(--spacing-sm) 0;
@@ -316,7 +401,6 @@
             }
         }
 
-        /* RT Ticket Flow details output area styling */
         #rtFlowDetailsOutput {
             background: #fff;
             border: 2px solid var(--primary-color);
@@ -325,12 +409,13 @@
             padding: 2rem 1.5rem 1.5rem 1.5rem;
             margin-top: 2rem;
             min-height: 80px;
-            max-width: 100%; /* Align with card container width */
-            width: calc(100%); /* Match padding of content-area */
+            max-width: 100%;
+            width: calc(100%);
             margin-left: auto;
             margin-right: auto;
             transition: box-shadow 0.2s;
         }
+
         #rtFlowDetailsOutput .rt-detail-title {
             font-size: 1.15rem;
             font-weight: 700;
@@ -340,6 +425,7 @@
             align-items: center;
             gap: 0.5rem;
         }
+
         #rtFlowDetailsOutput .rt-detail-icon {
             width: 28px;
             height: 28px;
@@ -352,55 +438,16 @@
             font-weight: bold;
             font-size: 1rem;
         }
+
         #rtFlowDetailsOutput .step-description {
             margin-top: 0.5rem;
             background: none;
             border-radius: 0;
             padding: 0;
         }
+
         #rtFlowDetailsOutput .step-bullets {
             margin-top: 0.5rem;
-        }
-
-        /* Remove black outline from default state */
-        .section-title {
-            outline: none; /* Ensure no outline by default */
-        }
-
-        .section-title:focus {
-            outline: 2px solid var(--primary-color); /* Add outline only on focus */
-            outline-offset: 2px;
-        }
-
-        /* Add transition for step descriptions */
-        .step-description {
-            max-height: 0;
-            overflow: hidden; /* Default state: no scrolling */
-            transition: max-height 0.1s ease, padding 0.1s ease;
-        }
-
-        .step-container[aria-expanded="true"] .step-description {
-            max-height: 155px; /* Set a maximum height for the description */
-            overflow-y: auto; /* Enable vertical scrolling when expanded */
-            padding-top: var(--spacing-sm); /* Add padding when expanded */
-        }
-
-        .step-description {
-            position: relative; /* Ensure the container is positioned properly */
-            padding-right: 10px; /* Add padding to prevent content from overlapping the scrollbar */
-        }
-
-        .step-description::-webkit-scrollbar {
-            width: 6px; /* Customize scrollbar width */
-        }
-
-        .step-description::-webkit-scrollbar-thumb {
-            background: var(--primary-color); /* Customize scrollbar color */
-            border-radius: 3px;
-        }
-
-        .step-description::-webkit-scrollbar-track {
-            background: var(--bg-light); /* Customize scrollbar track color */
         }
     </style>
 </head>
@@ -416,22 +463,42 @@
                 </svg>
                 <input type="text" id="searchInput" class="search-input" placeholder="Search templates..." aria-label="Search templates">
             </div>
-            <button class="section-title font-semibold text-blue-900 mt-6 mb-2 cursor-pointer hover:text-blue-600" data-section="RT Ticket Flow">RT Ticket Flow</button>
-            <button class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Retention Team Flow">Retention Team Flow</button>
-            <button class="section-title font-semibold text-blue-900 mb-2 cursor-pointer hover:text-blue-600" data-section="Collection Team Flow">Collection Team Flow</button>
+            <div id="sidebarContent">
+                <div class="section-title" data-section="RT Ticket Flow" data-collapsed="false">
+                    RT Ticket Flow
+                    <svg class="w-5 h-5 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <ul class="subsection-list collapsible-content open">
+                    <li><a class="subsection-link active" data-section="RT Ticket Flow" data-type="Main Flow">Main Flow</a></li>
+                    <li><a class="subsection-link" data-section="RT Ticket Flow" data-type="RT Ticket Inquiries">RT Ticket Inquiries</a></li>
+                </ul>
+                <div class="section-title" data-section="Retention Team Flow" data-collapsed="true">
+                    Retention Team Flow
+                    <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="section-title" data-section="Collection Team Flow" data-collapsed="true">
+                    Collection Team Flow
+                    <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </div>
         </nav>
         <main class="content-area">
             <div class="template-header">
-                <div id="templateTitle" class="template-title">RT Ticket Flow</div>
+                <div id="templateTitle" class="template-title">Main Flow</div>
                 <div>
-                    <button id="inquiriesButton" class="inquiries-button">RT Ticket Inquiries</button>
                     <button id="copyButton" class="copy-button">Copy Template</button>
                 </div>
             </div>
             <div id="templateContent" class="data-item">
                 <div class="flex flex-row flex-wrap items-start gap-2">
                     <!-- Step 1 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">1</span>
@@ -440,7 +507,7 @@
                                 </svg>
                                 <span class="step-title">Receive Request</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 Request will received by:
                                 <ul class="step-bullets">
                                     <li>Facebook</li>
@@ -457,7 +524,7 @@
                     </svg>
 
                     <!-- Step 2 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">2</span>
@@ -466,7 +533,7 @@
                                 </svg>
                                 <span class="step-title">Create Ticket</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 Ticket will created by:
                                 <ul class="step-bullets">
                                     <li>Tier1</li>
@@ -483,7 +550,7 @@
                     </svg>
 
                     <!-- Step 3 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">3</span>
@@ -492,7 +559,7 @@
                                 </svg>
                                 <span class="step-title">CCare Ticket Inquiries</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 RT Team responsible all inquiries in Queue CareRenewal and CareCollection.
                             </div>
                         </div>
@@ -503,7 +570,7 @@
                     </svg>
 
                     <!-- Step 4 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">4</span>
@@ -512,7 +579,7 @@
                                 </svg>
                                 <span class="step-title">Analyze Issue</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 Agent reviews ticket, investigates issue, and documents findings in RT system.
                                 <ul class="step-bullets">
                                     <li>On Negotiation / Tracking: Ticket Status "Feedback", Timeline 5 days resolved.</li>
@@ -527,7 +594,7 @@
                     </svg>
 
                     <!-- Step 5 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">5</span>
@@ -536,7 +603,7 @@
                                 </svg>
                                 <span class="step-title">Pickup / Assign</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 Create CCare Ticket for the performance.
                             </div>
                         </div>
@@ -547,7 +614,7 @@
                     </svg>
 
                     <!-- Step 6 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">6</span>
@@ -556,7 +623,7 @@
                                 </svg>
                                 <span class="step-title">Track Performance</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 <ul class="step-bullets">
                                     <li>Paid within 24 hours (Promotion code date VS Payment date) Escalate to owner.</li>
                                     <li>After 24 hours RT Agent Activate and complete retain.</li>
@@ -570,7 +637,7 @@
                     </svg>
 
                     <!-- Step 7 -->
-                    <div class="step-container">
+                    <div class="step-container" aria-expanded="false">
                         <div class="flex flex-col items-start gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="number-icon">7</span>
@@ -579,7 +646,7 @@
                                 </svg>
                                 <span class="step-title">Resolve/Close Ticket</span>
                             </div>
-                            <div class="step-description">
+                            <div class="step-description hidden">
                                 Mark ticket as 'Resolved,' send customer confirmation, and monitor follow-ups.
                             </div>
                         </div>
@@ -594,8 +661,7 @@
             const templateTitle = document.getElementById('templateTitle');
             const templateContent = document.getElementById('templateContent');
             const copyButton = document.getElementById('copyButton');
-            const inquiriesButton = document.getElementById('inquiriesButton');
-            const defaultContent = templateContent.innerHTML; // Store default RT Ticket Flow content
+            const defaultContent = templateContent.innerHTML;
 
             // Section content map
             const sectionContent = {
@@ -623,9 +689,9 @@
                 `,
                 "RT Ticket Inquiries": `
                     <div class="rt-inquiries-grid">
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">1</span>
                                     <span class="step-title">Service Availability (Technical-Issue) (Time Frame - 24 hours)</span>
                                 </div>
@@ -640,9 +706,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">2</span>
                                     <span class="step-title">Fulfillment (Time Frame - 24 hours)</span>
                                 </div>
@@ -662,9 +728,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">3</span>
                                     <span class="step-title">Service Performance (Technical-Issue) (Time Frame - 24 hours)</span>
                                 </div>
@@ -683,9 +749,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">4</span>
                                     <span class="step-title">Re-activation (Queue ActivationTeam)</span>
                                 </div>
@@ -697,9 +763,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">5</span>
                                     <span class="step-title">Change Order: Queue Customer Delivery</span>
                                 </div>
@@ -718,9 +784,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">6</span>
                                     <span class="step-title">Open Invoice Activities: Queue CareCollection</span>
                                 </div>
@@ -736,9 +802,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step-container">
+                        <div class="step-container" aria-expanded="false">
                             <div class="flex flex-col items-start gap-2">
-                                <div class="flex items-center gap-2 card-title" tabindex="0" aria-expanded="false">
+                                <div class="flex items-center gap-2 card-title" tabindex="0">
                                     <span class="number-icon">7</span>
                                     <span class="step-title">Billing Issues (Non - Open Invoice): Queue CareRenewal</span>
                                 </div>
@@ -765,7 +831,7 @@
 
                 const description = this.querySelector('.step-description');
                 if (description) {
-                    description.classList.toggle('hidden', isExpanded); // Toggle visibility
+                    description.classList.toggle('hidden', isExpanded);
                 }
             }
 
@@ -774,35 +840,73 @@
                 templateContent.querySelectorAll('.step-container').forEach(step => {
                     step.removeEventListener('click', handleStepClick);
                     step.addEventListener('click', handleStepClick);
-                    step.setAttribute('aria-expanded', 'false'); // Initialize as collapsed
+                    step.setAttribute('aria-expanded', 'false');
                     const description = step.querySelector('.step-description');
                     if (description) {
-                        description.classList.add('hidden'); // Ensure descriptions are hidden by default
+                        description.classList.add('hidden');
                     }
                 });
             }
 
-            // Handle section clicks
-            sectionTitles.forEach(section => {
-                section.addEventListener('click', function() {
-                    sectionTitles.forEach(s => s.classList.remove('bg-blue-100'));
-                    this.classList.add('bg-blue-100');
-                    const sectionName = this.getAttribute('data-section');
-                    templateTitle.textContent = sectionName;
-                    templateContent.innerHTML = sectionName === 'RT Ticket Flow' ? defaultContent : sectionContent[sectionName] || '';
-                    copyButton.classList.remove('hidden');
-                    inquiriesButton.classList.toggle('hidden', sectionName !== 'RT Ticket Flow');
-                    attachStepListeners(); // Reattach listeners after content update
-                });
+            // Handle section title collapse/expand
+            function initializeCollapsibleSections() {
+                sectionTitles.forEach(title => {
+                    const content = title.nextElementSibling;
+                    if (!content) return;
 
-                // Add keyboard support for sections
-                section.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        this.click();
+                    const isCollapsed = title.getAttribute('data-collapsed') === 'true';
+                    content.classList.toggle('open', !isCollapsed);
+                    content.style.maxHeight = isCollapsed ? '0' : `${content.scrollHeight}px`;
+                    const svg = title.querySelector('svg');
+                    if (svg) {
+                        svg.classList.toggle('rotate-180', !isCollapsed);
                     }
+
+                    title.addEventListener('click', () => {
+                        const isCollapsed = title.getAttribute('data-collapsed') === 'true';
+                        title.setAttribute('data-collapsed', !isCollapsed);
+                        content.classList.toggle('open');
+                        content.style.maxHeight = isCollapsed ? `${content.scrollHeight}px` : '0';
+                        const svg = title.querySelector('svg');
+                        if (svg) {
+                            svg.classList.toggle('rotate-180');
+                        }
+                    });
+
+                    title.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            this.click();
+                        }
+                    });
                 });
-            });
+            }
+
+            // Handle subsection links
+            function initializeSubsectionLinks() {
+                const subsectionLinks = document.querySelectorAll('.subsection-link');
+                subsectionLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        subsectionLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const sectionName = this.getAttribute('data-section');
+                        const type = this.getAttribute('data-type');
+                        templateTitle.textContent = type;
+                        templateContent.innerHTML = type === 'Main Flow' ? defaultContent : sectionContent[type] || '';
+                        copyButton.classList.remove('hidden');
+                        attachStepListeners();
+                    });
+
+                    link.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            this.click();
+                        }
+                    });
+                });
+            }
 
             // Copy button functionality
             copyButton.addEventListener('click', () => {
@@ -816,23 +920,24 @@
                 });
             });
 
-            // Inquiries button functionality
-            inquiriesButton.addEventListener('click', () => {
-                templateTitle.textContent = 'RT Ticket Inquiries';
-                templateContent.innerHTML = sectionContent['RT Ticket Inquiries'];
-                copyButton.classList.remove('hidden');
-                attachStepListeners(); // Reattach listeners for new card titles
-            });
+            // Initialize UI
+            initializeCollapsibleSections();
+            initializeSubsectionLinks();
+            attachStepListeners();
 
-            // Set default section and attach listeners for RT Ticket Flow
-            if (sectionTitles.length > 0) {
-                sectionTitles[0].classList.add('bg-blue-100');
-                templateTitle.textContent = 'RT Ticket Flow';
-                templateContent.innerHTML = defaultContent;
-                attachStepListeners(); // Attach listeners for default content
+            // Set default view to Main Flow
+            const mainFlowLink = document.querySelector('.subsection-link[data-type="Main Flow"]');
+            if (mainFlowLink) {
+                mainFlowLink.classList.add('active');
+                mainFlowLink.click(); // Trigger click to set content
+                mainFlowLink.focus();
+            }
 
-                // Remove focus from the default section to prevent the black outline
-                sectionTitles[0].blur();
+            // Ensure RT Ticket Flow section is expanded
+            const rtTicketFlowSection = document.querySelector('.section-title[data-section="RT Ticket Flow"]');
+            if (rtTicketFlowSection) {
+                rtTicketFlowSection.classList.add('active');
+                rtTicketFlowSection.blur(); // Remove focus to avoid outline
             }
         });
     </script>
